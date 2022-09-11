@@ -1,52 +1,60 @@
 class Node:
-  
+
   def __init__(self, data):
     self.data = data
     self.next = None
 
 
-class Queue:
-  
+class Stack:
   def __init__(self):
-    self.head = None
-    self.last = None
 
-  def enqueue(self, data) -> None:
-    if self.last is None:
-      self.head = Node(data)
-      self.last = self.head
-    else:
-      self.last.next = Node(data)
-      self.last = self.last.next
+    self.top = None
 
-  def dequeue(self) -> None:
-    if self.head is None:
-      return None
-    else:
-      val_returned = self.head.data
-      self.head = self.head.next
+  def push(self, data) -> None:
 
-  def status(self) -> None:
-    current = self.head
-    status_of_queue = []
-    while (current):
-      status_of_queue.append(current.data)
-      current = current.next
-    for element in status_of_queue:
-      print(element, end="=>")
-    print(None)
+      if self.top is None:
+        new_node = Node(data)
+        self.top = new_node
+      else:
+        new_node = Node(data)
+        new_node.next = self.top
+        self.top = new_node
+  def pop(self) -> None:
+
+      if self.top != None:
+        if self.top.next == None:
+          self.top = None
+        else:
+          self.top = self.top.next
+
+
+  def status(self):
+    """
+    It prints all the elements of stack.
+    """
+    temp = self.top
+    if temp == None:
+      print(temp)
+    if temp is not None:
+      while temp.next != None:
+        print(temp.data,end="=>")
+        temp = temp.next
+      if temp.next == None:
+        print(temp.data,end="=>")
+        print(None)
+
 
 
 # Do not change the following code
-queue = Queue()
+stack = Stack()
 operations = []
 for specific_operation in input().split(','):
     operations.append(specific_operation.strip())
 input_data = input()
 data = input_data.split(',')
 for i in range(len(operations)):
-  if operations[i] == "enqueue":
-    queue.enqueue(int(data[i]))
-  elif operations[i] == "dequeue":
-    queue.dequeue()
-queue.status()
+  if operations[i] == "push":
+    stack.push(int(data[i]))
+  elif operations[i] == "pop":
+    stack.pop()
+stack.status()
